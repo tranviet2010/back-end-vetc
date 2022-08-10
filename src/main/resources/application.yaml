@@ -1,0 +1,67 @@
+server:
+  port: ${port:8088}
+  healthcheck:
+    uri: "/actuator/health"
+  xApiKey: eue823478uwuishdsfhjsd8939827389273897987wr837r98we7r8w9erwer7w9er7we8rw98er7
+  image:
+    path: http://10.101.243.21:8088/
+    dir:
+      host: /opt/manage-api/files/
+  customer-info:
+    file-type:
+      cmnd-back: 'CMND_BACK'
+      cmnd-font: 'CMND_FRONT'
+  account:
+    admin: 'admin'
+    limit:
+      hm-day: 'MONEY_LIMIT_PER_DAY'
+      hm-month: 'MONEY_LIMIT_PER_MONTH'
+      hm-trans: 'MONEY_LIMIT_PER_TRANSACTION'
+swagger:
+  basePath: /
+#  host: 'localhost:8088'
+  host: '10.101.243.21:8088'
+springdoc:
+  swagger-ui:
+    path: /swagger-manage-api.html
+  api-docs:
+    path: /v2/api-docs
+spring:
+  datasource:
+    driver:
+      class: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@//10.101.40.17:1521/coredb
+    username: EWALLET_OWNER
+    password: ewallet_owner
+    testWhileIdle: true
+    validationQuery: SELECT 1
+    hikari:
+      maximum-pool-size: 300
+      minimum-idle: 10
+      connectionTimeout: 30000 #30s
+      idleTimeout: 600000 #10 minutes
+      maxLifetime: 1800000 #30 minutes
+    jpa:
+      hibernate:
+        naming:
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
+          physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        hibernate:
+          format_sql: true
+      show-sql: false
+      database-platform: org.hibernate.dialect.Oracle10gDialect
+logs:
+  path: /var/logs
+logging:
+  application:
+    name: manage-api
+  level:
+    org:
+      hibernate:
+        SQL:
+          TRACE
+        type:
+          descriptor:
+            sql:
+              BasicBinder:
+                TRACE
